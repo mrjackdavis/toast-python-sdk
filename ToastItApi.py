@@ -4,8 +4,8 @@ from nap.url import Url
 from SklItem import SklItem
 from datetime import datetime
 
-class SklItemApi:
-	"""Skeleton Scene Item"""
+class ToastItApi:
+	"""Toast-it.io API"""
 	def __init__(self,url):
 		self.apiUrl = url
 		self.api = Url(self.apiUrl)
