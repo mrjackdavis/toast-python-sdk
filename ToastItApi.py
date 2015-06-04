@@ -16,15 +16,26 @@ class ToastItApi:
 		allScenes = self.GetAll()
 		newScenes = []
 
-		# If any scenes have complete processes, then they aren't new
 		for scene in allScenes:
 			isNew = True
 			
 			if scene.status == 'PENDING':
-				logging.info('Scene %s is new. Queuing for processing', scene.id)
 				newScenes.append(scene)
 
 		return newScenes
+
+	def GetAllNewForGenerator(self,generatorName):
+		# Get scenes
+		newScenes = self.GetAllNew()
+		scenes = []
+
+		for scene in newScenes:
+			isNew = True
+			
+			if scene.generator == generatorName:
+				scenes.append(scene)
+
+		return scenes
 
 	def GetAll(self):
 		# Get scenes
@@ -36,6 +47,7 @@ class ToastItApi:
 			logging.debug(scene)
 			item = SklItem(scene['sceneID'],scene['createdAt'],scene['resourceURI'])
 			item.status = scene['status']
+			item.generator = scene['generatorName']
 			logging.info('Found item with resource location "%s"',item.resourceURL)
 
 			sceneObjs.append(item)
